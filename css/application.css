@@ -1,0 +1,11 @@
+.background {
+    background: url(../images/background.jpg)  50%  no-repeat fixed;
+    align-content: center;
+    background-size: cover;
+}
+
+.canvas-container-size {
+    margin: 2% 25% 2% 25%;
+    height: 800px;
+    width: 50%;
+}
