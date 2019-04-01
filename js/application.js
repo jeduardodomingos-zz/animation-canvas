@@ -1,14 +1,6 @@
-let defaultMarginWidth = 70;
-let defaultMarginHeight = 140;
-let defaultColisionWidth = 140;
-let defaultColisionHeight = 140;
-let defaultShotMarginWidth = 56;
-let defaultShotMarginHeight = 15;
+import { Spaceship } from "./spaceship.js";
 
-let lastXSpaceshipPosition = null;
-let lastYSpaceshipPosition = null;
-
-let ballShotList = [];
+let spaceship = new Spaceship();
 
 function init() {
     setCanvasArea();
@@ -34,49 +26,7 @@ function clearCanvas() {
     context.save();
 }
 
-function initialSpaceshipValues() {
-    let canvas = document.getElementById('canvas-area');
 
-    let initialXSpaceship = (canvas.width / 2) - defaultMarginWidth;
-    let initialYSpaceship = (canvas.height) - defaultMarginHeight;
-
-    return { initialX: initialXSpaceship, initialY: initialYSpaceship };
-}
-
-function makeInitialSpaceship() {
-    let canvas = document.getElementById('canvas-area');
-    let context = canvas.getContext('2d');
-    let spaceship = new Image();
-
-    spaceship.src = '../images/spaceship.png';
-
-    let defaultValues = initialSpaceshipValues();
-
-    spaceship.onload = () => {
-        context.drawImage(spaceship, defaultValues.initialX, defaultValues.initialY);
-    }
-}
-
-function spaceshipMove(left, right, top, bottom, increment) {
-    let canvas = document.getElementById('canvas-area');
-
-    let defaultValues = initialSpaceshipValues();
-
-    lastXSpaceshipPosition = lastXSpaceshipPosition == null ? defaultValues.initialX : lastXSpaceshipPosition;
-    lastYSpaceshipPosition = lastYSpaceshipPosition == null ? defaultValues.initialY : lastYSpaceshipPosition;
-
-    clearCanvas();
-
-    if (left && lastXSpaceshipPosition > 0) {
-        lastXSpaceshipPosition -= increment;
-    } else if (right && lastXSpaceshipPosition < canvas.width - defaultColisionWidth) {
-        lastXSpaceshipPosition += increment;
-    } else if (bottom && lastYSpaceshipPosition < canvas.height - defaultColisionHeight) {
-        lastYSpaceshipPosition += increment;
-    } else if (top && lastYSpaceshipPosition > canvas.height / 2) {
-        lastYSpaceshipPosition -= increment;
-    }
-}
 
 function draw() {
     let canvas = document.getElementById('canvas-area');
@@ -97,15 +47,7 @@ function draw() {
     context.restore();
 }
 
-function fire() {
-    let ballCount = 0;
 
-    ballShotList.forEach((value) => ballCount++);
-
-    let newBall = { ballNumber: ballCount + 1, ballXPosition: lastXSpaceshipPosition + defaultShotMarginWidth, ballYPosition: lastYSpaceshipPosition + defaultShotMarginHeight };
-
-    ballShotList.push(newBall);
-}
 
 function setSpaceshipEvents() {
     window.addEventListener('keypress', keyPress, false);
