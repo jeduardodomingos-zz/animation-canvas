@@ -1,24 +1,14 @@
-import { Shot } from "./shot";
+import { Shot } from "./shot.js";
 
 export class Spaceship {
 
     constructor(initialXPosition, initialYPosition, lastYPosition, lastXPosition, marginX, marginY, colisionX, colisionY, movePxLength, shots, layoutPath, canvasAreaName) {
-        this.initialXPosition = null;
-        this.initialYPosition = null;
-        this.lastYPosition = null;
-        this.lastXPosition = null;
-        this.marginX = null;
-        this.marginY = null;
-        this.colisionX = null;
-        this.colisionY = null;
-        this.layoutPath = null;
-        this.canvasAreaName = null;
         this.shots = [];
     }
 
     makeInitialSpaceship() {
-        setInitialSpaceship();
-        drawSpaceship(this.layoutPath, this.initialXPosition, this.initialYPosition);
+        this.setInitialSpaceship();
+        this.drawSpaceship(this.layoutPath, this.initialXPosition, this.initialYPosition);
     }
 
     setInitialSpaceship() {
@@ -70,7 +60,9 @@ export class Spaceship {
 
         spaceship.src = layoutPath;
 
-        context.drawImage(spaceship, x, y);
+        spaceship.onload = () => {
+            context.drawImage(spaceship, x, y);
+        };
     }
 
 }

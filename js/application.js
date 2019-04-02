@@ -2,12 +2,24 @@ import { Spaceship } from "./spaceship.js";
 
 let spaceship = new Spaceship();
 
+window.onload = () => {
+    initializeSpaceship();
+    init();
+};
+
+
+function initializeSpaceship() {
+    spaceship.marginX = 70;
+    spaceship.marginY = 140;
+    spaceship.canvasAreaName = "canvas-area";
+    spaceship.layoutPath = "../images/spaceship.png";
+}
+
 function init() {
     setCanvasArea();
-    makeInitialSpaceship();
-    setSpaceshipEvents();
+    clearCanvas();
 
-    setInterval(draw, 10);
+    spaceship.makeInitialSpaceship();
 }
 
 function setCanvasArea() {
@@ -25,29 +37,6 @@ function clearCanvas() {
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.save();
 }
-
-
-
-function draw() {
-    let canvas = document.getElementById('canvas-area');
-    let context = canvas.getContext('2d');
-
-    let spaceship = new Image();
-    let shotBall = new Image();
-
-    spaceship.src = '../images/spaceship.png';
-    shotBall.src = '../images/ball.png';
-
-    clearCanvas();
-
-    spaceship.onload = () => context.drawImage(spaceship, lastXSpaceshipPosition, lastYSpaceshipPosition);
-
-    shotBall.onload = () => ballShotList.forEach((value) => context.drawImage(shotBall, value.ballXPosition, value.ballYPosition -= 2));
-
-    context.restore();
-}
-
-
 
 function setSpaceshipEvents() {
     window.addEventListener('keypress', keyPress, false);
@@ -71,3 +60,4 @@ function keyPress(event) {
         console.log('fire');
     }
 }
+
