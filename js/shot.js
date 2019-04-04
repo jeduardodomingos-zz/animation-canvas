@@ -6,11 +6,4 @@ export class Shot {
         this.marginX = null;
         this.marginY = null;
     }
-
-    set shotXPositon(value) {
-        this.shotXPositon = value + this.marginX;
-    }
-    set shotYPosition(value) {
-        this.shotYPosition = value + this.marginY;
-    }
 }

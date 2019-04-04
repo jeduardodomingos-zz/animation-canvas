@@ -2,8 +2,28 @@ import { Shot } from "./shot.js";
 
 export class Spaceship {
 
-    constructor(initialXPosition, initialYPosition, lastYPosition, lastXPosition, marginX, marginY, colisionX, colisionY, movePxLength, shots, layoutPath, canvasAreaName) {
+    constructor() {
+        this.initialXPosition = null;
+        this.initialYPosition = null;
+        this.lastYPosition = null;
+        this.lastXPosition = null;
+        this.marginX = null;
+        this.marginY = null;
+        this.colisionX = null;
+        this.colisionY = null;
+        this.movePxLength = null;
+        this.shots = null;
+        this.layoutPath = null;
+        this.canvasAreaName = null;
         this.shots = [];
+    }
+
+    clearCanvas() {
+        let canvas = document.getElementById(this.canvasAreaName);
+        let context = canvas.getContext('2d');
+
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.save();
     }
 
     makeInitialSpaceship() {
@@ -19,28 +39,30 @@ export class Spaceship {
     }
 
     makeFire() {
-        let fireCount = shots.length;
+        let fireCount = this.shots.length;
 
         let newShot = new Shot();
 
         newShot.shotNumber = fireCount + 1;
         newShot.marginX = 56;
         newShot.marginY = 15;
-        newShot.shotXPositon = this.lastXPosition;
-        newShot.shotYPosition = this.lastYPosition;
+        newShot.shotXPositon = this.lastXPosition + newShot.marginX;
+        newShot.shotYPosition = this.lastYPosition + newShot.marginY;
 
-        this.shots(newShot);
+        this.shots.push(newShot);
     }
 
     spaceshipMove(left, right, top, bottom, increment) {
-        let canvas = document.getElementById(canvasAreaName);
+        let canvas = document.getElementById(this.canvasAreaName);
+
+        console.log(this.canvasAreaName);
 
         this.lastXPosition = this.lastXPosition == null ? this.initialXPosition : this.lastXPosition;
         this.lastYPosition = this.lastYPosition == null ? this.initialYPosition : this.lastYPosition;
 
-        clearCanvas();
+        this.clearCanvas();
 
-        if (left && this.lastXPosition > 0) {
+        if (left && this.lastXPosition >= 0) {
             this.lastXPosition -= increment;
         } else if (right && this.lastXPosition < canvas.width - this.colisionX) {
             this.lastXPosition += increment;
@@ -50,19 +72,18 @@ export class Spaceship {
             this.lastYPosition -= increment;
         }
 
-        drawSpaceship(this.layoutPath, this.lastXPosition, this.lastYPosition);
+        this.drawSpaceship(this.layoutPath, this.lastXPosition, this.lastYPosition);
     }
 
-    drawSpaceship(layoutPath, x, y) {
-        let canvas = document.getElementById(this.canvasAreaName);
+    drawSpaceship(layoutPath) {
+        let canvas = document.getElementById('canvas-area');
         let context = canvas.getContext('2d');
         let spaceship = new Image();
 
         spaceship.src = layoutPath;
 
         spaceship.onload = () => {
-            context.drawImage(spaceship, x, y);
+            context.drawImage(spaceship, this.lastXPosition, this.lastYPosition);
         };
     }
-
 }

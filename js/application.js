@@ -7,7 +7,6 @@ window.onload = () => {
     init();
 };
 
-
 function initializeSpaceship() {
     spaceship.marginX = 70;
     spaceship.marginY = 140;
@@ -16,10 +15,13 @@ function initializeSpaceship() {
 }
 
 function init() {
+    setSpaceshipEvents();
     setCanvasArea();
     clearCanvas();
 
     spaceship.makeInitialSpaceship();
+
+    setInterval(spaceship.drawSpaceship, 100);
 }
 
 function setCanvasArea() {
@@ -38,26 +40,26 @@ function clearCanvas() {
     context.save();
 }
 
-function setSpaceshipEvents() {
-    window.addEventListener('keypress', keyPress, false);
-}
-
-function keyPress(event) {
+function spaceshipKeyPress(event) {
     if (event.charCode == 119 || event.charCode == 87) {
-        spaceshipMove(false, false, true, false, 10);
+        spaceship.spaceshipMove(false, false, true, false, 10);
         console.log('top');
     } else if (event.charCode == 97 || event.charCode == 65) {
-        spaceshipMove(true, false, false, false, 10);
+        spaceship.spaceshipMove(true, false, false, false, 10);
         console.log('left');
     } else if (event.charCode == 100 || event.charCode == 68) {
-        spaceshipMove(false, true, false, false, 10);
+        spaceship.spaceshipMove(false, true, false, false, 10);
         console.log('right');
     } else if (event.charCode == 115 || event.charCode == 83) {
-        spaceshipMove(false, false, false, true, 10);
+        spaceship.spaceshipMove(false, false, false, true, 10);
         console.log('bottom');
     } else if (event.charCode == 32) {
-        fire();
+        spaceship.makeFire();
         console.log('fire');
     }
+}
+
+function setSpaceshipEvents() {
+    window.addEventListener('keypress', spaceshipKeyPress, false);
 }
 
