@@ -72,7 +72,7 @@ export class Spaceship {
             this.lastYPosition -= increment;
         }
 
-        this.drawSpaceship(this.layoutPath, this.lastXPosition, this.lastYPosition);
+        this.drawSpaceship(this.layoutPath);
     }
 
     drawSpaceship(layoutPath) {
@@ -81,9 +81,28 @@ export class Spaceship {
         let spaceship = new Image();
 
         spaceship.src = layoutPath;
+        
+        context.drawImage(spaceship, this.lastXPosition, this.lastYPosition);
+        
+    }
 
-        spaceship.onload = () => {
-            context.drawImage(spaceship, this.lastXPosition, this.lastYPosition);
-        };
+    drawFire(){
+        let canvas = document.getElementById('canvas-area');
+        let context = canvas.getContext('2d');
+
+        this.clearCanvas();
+
+        this.drawSpaceship(this.layoutPath);
+
+        this.shots.forEach((shot) => {
+            let fire = new Image();
+            fire.src = '../images/ball.png';
+
+            shot.shotYPosition = shot.shotYPosition - 10;
+
+            context.drawImage(fire, shot.shotXPositon, shot.shotYPosition);
+        });
+        
+        context.restore();
     }
 }

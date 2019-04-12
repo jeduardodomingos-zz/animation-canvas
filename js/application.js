@@ -10,6 +10,8 @@ window.onload = () => {
 function initializeSpaceship() {
     spaceship.marginX = 70;
     spaceship.marginY = 140;
+    spaceship.colisionY = 130;
+    spaceship.colisionX = 130;
     spaceship.canvasAreaName = "canvas-area";
     spaceship.layoutPath = "../images/spaceship.png";
 }
@@ -21,7 +23,12 @@ function init() {
 
     spaceship.makeInitialSpaceship();
 
-    setInterval(spaceship.drawSpaceship, 100);
+    setInterval(drawAll, 100);
+}
+
+function drawAll(){
+  //  spaceship.drawSpaceship();
+    spaceship.drawFire();
 }
 
 function setCanvasArea() {
