@@ -101,6 +101,12 @@ export class Spaceship {
             shot.shotYPosition = shot.shotYPosition - 10;
 
             context.drawImage(fire, shot.shotXPositon, shot.shotYPosition);
+
+            if(shot.shotYPosition <= 0){
+                this.shots.splice(this.shots.indexOf(shot), 1);
+            }
+
+            console.log(this.shots.length);
         });
         
         context.restore();

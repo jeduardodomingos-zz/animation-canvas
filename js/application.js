@@ -23,11 +23,11 @@ function init() {
 
     spaceship.makeInitialSpaceship();
 
-    setInterval(drawAll, 100);
+    setInterval(drawAll, 20);
 }
 
 function drawAll(){
-  //  spaceship.drawSpaceship();
+    spaceship.drawSpaceship();
     spaceship.drawFire();
 }
 
