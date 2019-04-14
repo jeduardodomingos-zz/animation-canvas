@@ -1,41 +1,64 @@
 import { Shot } from "./shot.js";
+import { BaseSpaceship } from "./base-spaceship.js";
+import { EnemySpaceship } from "./enemy-spaceship.js";
 
-export class Spaceship {
+export class Spaceship extends BaseSpaceship {
 
     constructor() {
-        this.initialXPosition = null;
-        this.initialYPosition = null;
-        this.lastYPosition = null;
-        this.lastXPosition = null;
-        this.marginX = null;
-        this.marginY = null;
-        this.colisionX = null;
-        this.colisionY = null;
-        this.movePxLength = null;
-        this.shots = null;
-        this.layoutPath = null;
-        this.canvasAreaName = null;
-        this.shots = [];
+        super();
+        this.enemies = [];
     }
 
-    clearCanvas() {
-        let canvas = document.getElementById(this.canvasAreaName);
-        let context = canvas.getContext('2d');
+    makeEnemy() {
+        let canvas = document.getElementById('canvas-area');
+        let enemy = new EnemySpaceship();
+        let lastEnemy;
 
-        context.clearRect(0, 0, canvas.width, canvas.height);
-        context.save();
+        enemy.marginX = 40;
+        enemy.marginY = 50;
+        enemy.colisionX = 130;
+        enemy.colisionY = 130;
+        enemy.canvasAreaName = "canvas-area";
+        enemy.layoutPath = '../images/enemy-spaceship.png';
+
+        if (this.enemies.length > 0) {
+
+            lastEnemy = this.enemies[this.enemies.length - 1];
+
+            if (((lastEnemy.lastXPosition == null ? lastEnemy.initialXPosition : lastEnemy.lastXPosition)) < (canvas.width - lastEnemy.colisionX)) {
+                enemy.initialXPosition = (lastEnemy.lastXPosition == null ? lastEnemy.initialXPosition : lastEnemy.lastXPosition) + enemy.marginX;
+                enemy.initialYPosition = (lastEnemy.lastYPosition == null ? lastEnemy.initialYPosition : lastEnemy.lastYPosition);
+            } else {
+                enemy.initialXPosition = 0 + enemy.marginX;
+                enemy.initialYPosition = (lastEnemy.lastYPosition == null ? lastEnemy.initialYPosition : lastEnemy.lastYPosition) + enemy.marginY;
+            }
+        } else {
+            enemy.initialXPosition = 0 + enemy.marginX;
+            enemy.initialYPosition = 0 + enemy.marginY;
+        }
+
+        if ((enemy.lastYPosition == null ? enemy.initialYPosition : enemy.lastYPosition) + enemy.marginY < canvas.height - enemy.colisionY * 3) {
+            this.enemies.push(enemy);
+        }
     }
 
-    makeInitialSpaceship() {
-        this.setInitialSpaceship();
-        this.drawSpaceship(this.layoutPath, this.initialXPosition, this.initialYPosition);
-    }
+    setScore() {
+        this.enemies.forEach((enemy) => {
+            this.shots.forEach((shot) => {
+                if (shot.shotXPositon >= ((enemy.lastXPosition == null ? enemy.initialXPosition : enemy.lastXPosition) - 5) && shot.shotXPositon <= ((enemy.lastXPosition == null ? enemy.initialXPosition : enemy.lastXPosition) + 30)) {
+                    if (shot.shotYPosition <= (enemy.lastYPosition == null ? enemy.initialYPosition : enemy.lastYPosition)) {
+                        this.score = (this.score == null ? 0 : this.score) + 1;
 
-    setInitialSpaceship() {
-        let canvas = document.getElementById(this.canvasAreaName);
+                        this.enemies.splice(this.enemies.indexOf(enemy), 1);
+                        this.shots.splice(this.shots.indexOf(shot), 1);
 
-        this.initialXPosition = (canvas.width / 2) - this.marginX;
-        this.initialYPosition = (canvas.height) - this.marginY;
+                        if ((localStorage.getItem("space-record") == null ? 0 : localStorage.getItem("space-record")) < this.score) {
+                            localStorage.setItem("space-record", this.score);
+                        }
+                    }
+                }
+            });
+        });
     }
 
     makeFire() {
@@ -75,24 +98,14 @@ export class Spaceship {
         this.drawSpaceship(this.layoutPath);
     }
 
-    drawSpaceship(layoutPath) {
-        let canvas = document.getElementById('canvas-area');
-        let context = canvas.getContext('2d');
-        let spaceship = new Image();
-
-        spaceship.src = layoutPath;
-        
-        context.drawImage(spaceship, this.lastXPosition, this.lastYPosition);
-        
-    }
-
-    drawFire(){
+    drawFire() {
         let canvas = document.getElementById('canvas-area');
         let context = canvas.getContext('2d');
 
         this.clearCanvas();
 
         this.drawSpaceship(this.layoutPath);
+        this.drawEnemies();
 
         this.shots.forEach((shot) => {
             let fire = new Image();
@@ -102,13 +115,33 @@ export class Spaceship {
 
             context.drawImage(fire, shot.shotXPositon, shot.shotYPosition);
 
-            if(shot.shotYPosition <= 0){
+            if (shot.shotYPosition <= 0) {
                 this.shots.splice(this.shots.indexOf(shot), 1);
             }
 
             console.log(this.shots.length);
         });
-        
+
+        context.restore();
+    }
+
+    drawEnemies() {
+        let canvas = document.getElementById('canvas-area');
+        let context = canvas.getContext('2d');
+
+        this.clearCanvas();
+
+        this.drawSpaceship(this.layoutPath);
+
+        this.setScore();
+
+        this.enemies.forEach((enemy) => {
+            let enm = new Image();
+            enm.src = '../images/enemy-spaceship.png';
+
+            context.drawImage(enm, enemy.lastXPosition == null ? enemy.initialXPosition : enemy.lastXPosition, enemy.lastYPosition == null ? enemy.initialYPosition : enemy.lastYPosition);
+        });
+
         context.restore();
     }
 }

@@ -21,12 +21,15 @@ function init() {
     setCanvasArea();
     clearCanvas();
 
+    spaceship.setInitialSpaceship();
     spaceship.makeInitialSpaceship();
 
-    setInterval(drawAll, 20);
+    setInterval(drawAll, 10);
 }
 
-function drawAll(){
+function drawAll() {
+    spaceship.makeEnemy();
+    spaceship.drawEnemies();
     spaceship.drawSpaceship();
     spaceship.drawFire();
 }
