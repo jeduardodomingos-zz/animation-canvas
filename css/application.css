@@ -9,3 +9,29 @@
     height: 560px;
     width: 50%;
 }
+
+.score-container-size{
+    margin: auto;
+    height: 40px;
+    width: 50%;
+    background: beige;
+}
+
+.score-title-fonts {
+    font-family: 'Segoe UI';
+    font-weight: bold;
+    font-size: 24px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    margin-left: 10px;
+}
+
+.score-value-fonts {
+    font-family: 'Segoe UI';
+    font-weight: bold;
+    font-size: 24px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    margin-left: 10px;
+    color: red;
+}

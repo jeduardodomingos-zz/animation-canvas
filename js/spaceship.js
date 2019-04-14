@@ -38,6 +38,18 @@ export class Spaceship extends BaseSpaceship {
         }
 
         if ((enemy.lastYPosition == null ? enemy.initialYPosition : enemy.lastYPosition) + enemy.marginY < canvas.height - enemy.colisionY * 3) {
+
+            let fireCount = this.shots.length;
+
+            let newShot = new Shot();
+
+            newShot.shotNumber = fireCount + 1;
+            newShot.marginX = enemy.marginX;
+            newShot.marginY = enemy.marginY + 20;
+            newShot.shotXPositon = (enemy.lastXPosition == null ? enemy.initialXPosition : enemy.lastXPosition) + newShot.marginX;
+            newShot.shotYPosition = (enemy.lastYPosition == null ? enemy.initialYPosition : enemy.lastYPosition) + newShot.marginY;
+
+            enemy.shots.push(newShot);
             this.enemies.push(enemy);
         }
     }
@@ -52,8 +64,12 @@ export class Spaceship extends BaseSpaceship {
                         this.enemies.splice(this.enemies.indexOf(enemy), 1);
                         this.shots.splice(this.shots.indexOf(shot), 1);
 
+                        document.getElementById('score-value').innerHTML = this.score.toString().padStart(6, '0');
+                        document.getElementById('record-value').innerHTML = localStorage.getItem("space-record");
+
                         if ((localStorage.getItem("space-record") == null ? 0 : localStorage.getItem("space-record")) < this.score) {
                             localStorage.setItem("space-record", this.score);
+                            document.getElementById('record-value').innerHTML = localStorage.getItem("space-record");
                         }
                     }
                 }
@@ -118,8 +134,6 @@ export class Spaceship extends BaseSpaceship {
             if (shot.shotYPosition <= 0) {
                 this.shots.splice(this.shots.indexOf(shot), 1);
             }
-
-            console.log(this.shots.length);
         });
 
         context.restore();
@@ -128,6 +142,7 @@ export class Spaceship extends BaseSpaceship {
     drawEnemies() {
         let canvas = document.getElementById('canvas-area');
         let context = canvas.getContext('2d');
+        let count = 0;
 
         this.clearCanvas();
 
