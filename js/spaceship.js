@@ -6,6 +6,7 @@ export class Spaceship extends BaseSpaceship {
 
     constructor() {
         super();
+        this.incrementLevel = 0.15;
         this.gameOver = false;
         this.enemies = [];
     }
@@ -35,6 +36,7 @@ export class Spaceship extends BaseSpaceship {
                     enemy.initialYPosition = (lastEnemy.lastYPosition == null ? lastEnemy.initialYPosition : lastEnemy.lastYPosition) + enemy.marginY;
                 }
             } else {
+                this.incrementLevel += 0.05;
                 enemy.initialXPosition = 0 + enemy.marginX;
                 enemy.initialYPosition = 0 + enemy.marginY;
             }
@@ -152,7 +154,7 @@ export class Spaceship extends BaseSpaceship {
             enm.src = '../images/enemy-spaceship.png';
 
             enemy.lastXPosition = enemy.lastXPosition == null ? enemy.initialXPosition : enemy.lastXPosition;
-            enemy.lastYPosition = enemy.lastYPosition == null ? enemy.initialYPosition : enemy.lastYPosition + 0.1;
+            enemy.lastYPosition = enemy.lastYPosition == null ? enemy.initialYPosition : enemy.lastYPosition + this.incrementLevel;
 
             if (enemy.lastYPosition >= canvas.height - this.colisionY) {
                 let gameOver = new Image();

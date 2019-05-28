@@ -23,6 +23,9 @@ function init() {
 
     spaceship.setInitialSpaceship();
     spaceship.makeInitialSpaceship();
+    spaceship.spaceshipMove(false, false, true, false, 10);
+
+    document.getElementById('record-value').innerHTML = localStorage.getItem("space-record");
 
     setInterval(drawAll, 10);
 }
