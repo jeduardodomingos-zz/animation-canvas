@@ -1,32 +1,49 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="utf-8" />
+    <head>
+        <meta charset="utf-8" />
 
-    <link rel="stylesheet" type="text/css" href="../css/application.css" />
+        <link rel="stylesheet" type="text/css" href="../css/application.css" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+        <script type="module" src="../js/application.js" crossorigin="anonymous"></script>
+        <link href="https://fonts.googleapis.com/css?family=ZCOOL+KuaiLe&display=swap" rel="stylesheet">
+    </head>
 
-    <script type="module" src="../js/application.js"></script>
-</head>
+    <body>
+        <nav class="navbar navbar-dark bg-dark">
+            <span>
+                <label class="score-title-fonts" id="score-title">Pontuação Atual: </label>
+                <label class="score-title-fonts m-l-0" id="score-value">000</label>
+            </span>
+            <span>
+                <label class="title-font" id="score-title">Spaceship Challange</label>
+            </span>
+            <span class="m-l-0">
+                <label class="score-title-fonts" id="record-title">Pontuação Record: </label>
+                <label class="score-title-fonts m-l-0" id="record-value">000</label>
+            </span>
+        </nav>
 
-<body>
-    <div class="background canvas-container-size" id="canvas-container">
-        <canvas id="canvas-area"></canvas>
-    </div>
-    <div class="score-container-size" id="score-container">
-        <span>
-            <label class="score-title-fonts" id="score-title">Pontuação da Rodada: </label>
-        </span>
-        <span>
-            <label class="score-value-fonts" id="score-value">000000</label>
-        </span>
-        <span style="float: right; padding-right: 10px;">
-            <label class="score-value-fonts" id="record-value">000000</label>
-        </span>
-        <span style="float: right;">
-            <label class="score-title-fonts" id="record-title">Pontuação Record: </label>
-        </span>
-    </div>
-</body>
+        <div class="background canvas-container-size" id="canvas-container">
+            <canvas id="canvas-area"></canvas>
+            <button type="button" class="btn btn-success pool-right" onclick="reload();">Reiniciar</button>
+            <button type="button" class="btn btn-danger pool-right" onclick="resetRecord();">Zerar Score</button>
+        </div>
+        <footer class="page-footer font-small blue pt-4">
+
+            <!-- Footer Links -->
+            <div class="container-fluid text-center text-md-left">
+            </div>
+
+            <div class="footer-title-fonts footer-copyright text-center py-3">
+                © 2019 Copyright: Ciência da Computação Unifaj
+            </div>
+        </footer>
+    </body>
 
 </html>

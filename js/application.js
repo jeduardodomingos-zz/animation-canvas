@@ -76,3 +76,11 @@ function setSpaceshipEvents() {
     window.addEventListener('keypress', spaceshipKeyPress, false);
 }
 
+function reload() {
+    window.location.href = 'D:\Projetos\Unifaj\Computacao Grafica\animation-canvas\html';
+}
+
+function resetRecord() {
+    localStorage.setItem("space-record", 0);
+    window.location.href = 'D:\Projetos\Unifaj\Computacao Grafica\animation-canvas\html';
+}

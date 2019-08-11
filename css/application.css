@@ -4,6 +4,11 @@
     background-size: cover;
 }
 
+body {
+	height: 100%;
+	background-image: url('../images/background-main.jpg');
+}
+
 .canvas-container-size {
     margin: 2% 25% 2% 25%;
     height: 560px;
@@ -18,12 +23,16 @@
 }
 
 .score-title-fonts {
-    font-family: 'Segoe UI';
+    color: lightgray;
+    font-family: 'ZCOOL KuaiLe', cursive;
     font-weight: bold;
-    font-size: 24px;
-    padding-top: 100px;
-    padding-bottom: 100px;
-    margin-left: 10px;
+    font-size: 1.25rem;
+}
+
+.footer-title-fonts {
+    color: white;
+    font-family: 'ZCOOL KuaiLe', cursive;
+    font-size: 1.25rem;
 }
 
 .score-value-fonts {
@@ -34,4 +43,11 @@
     padding-bottom: 100px;
     margin-left: 10px;
     color: red;
+}
+
+.title-font {
+    color: lightgray;
+    font-family: 'ZCOOL KuaiLe', cursive;
+    font-weight: bold;
+    font-size: 1.50rem;
 }
